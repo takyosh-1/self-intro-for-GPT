@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>自己紹介生成</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div id="container">
+    <div id="input">
+        <h2>名前を入力</h2>
+        <input type="text" id="name" placeholder="名前を入力してください">
+        <button id="generate">生成</button>
+    </div>
+    <div id="output">
+        <h2>自己紹介</h2>
+        <pre id="selfintro"></pre>
+    </div>
+</div>
+<script>
+document.getElementById('generate').addEventListener('click', function() {
+    const name = document.getElementById('name').value;
+    document.getElementById('selfintro').textContent = '';
+    fetch('/generate', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name: name})
+    }).then(response => {
+        const reader = response.body.getReader();
+        function read() {
+            reader.read().then(({done, value}) => {
+                if(done) return;
+                const text = new TextDecoder().decode(value);
+                document.getElementById('selfintro').textContent += text;
+                read();
+            });
+        }
+        read();
+    });
+});
+</script>
+</body>
+</html>
