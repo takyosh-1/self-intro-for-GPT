@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+#container {
+    display: flex;
+    height: 100vh;
+}
+#input, #output {
+    flex: 1;
+    padding: 20px;
+}
+#input {
+    border-right: 1px solid #ccc;
+}
+#name {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+#selfintro {
+    white-space: pre-wrap;
+    font-size: 16px;
+}
